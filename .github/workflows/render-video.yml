@@ -21,19 +21,19 @@ name: Render video
 jobs:
   render:
     name: Render video
-    runs-on: ubuntu-latest
+    runs-on: macos-14
     steps:
       - name: Checkout
         uses: actions/checkout@main
       - name: Setup node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: 16
-      - name: Install Fallback fonts (fonts)
-        run: |
-          sudo apt-get update -yqq
-          sudo apt-get install -yq --no-install-recommends \
-            fonts-noto-core fonts-noto-cjk fonts-noto-color-emoji fonts-noto-mono
+          node-version: lts/*
+      # - name: Install Fallback fonts (fonts)
+      #   run: |
+      #     sudo apt-get update -yqq
+      #     sudo apt-get install -yq --no-install-recommends \
+      #       fonts-noto-core fonts-noto-cjk fonts-noto-color-emoji fonts-noto-mono
       - name: Install dependencies (node modules)
         run: npm i
       - name: Define input props
@@ -45,7 +45,7 @@ jobs:
         env:
           REMOTION_GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Upload video
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: out.mp4
           path: out/Main.mp4
